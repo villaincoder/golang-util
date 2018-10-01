@@ -3,7 +3,7 @@ package util
 import "github.com/satori/go.uuid"
 
 func NewUUIDStr() string {
-	return uuid.NewV4().String()
+	return uuid.Must(uuid.NewV4()).String()
 }
 
 func IsInvalidUUID(input string) bool {
