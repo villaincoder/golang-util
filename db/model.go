@@ -11,7 +11,7 @@ type BaseModel struct {
 	RowId     uint64     `gorm:"primary_key"`
 	Id        *string    `gorm:"not null;type:uuid;unique_index"`
 	CreatedAt *time.Time `gorm:"not null"`
-	UpdatedAt *time.Time
+	UpdatedAt *time.Time `gorm:"not null"`
 	DeletedAt *time.Time
 }
 
