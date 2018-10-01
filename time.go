@@ -55,3 +55,7 @@ func Time2Ptr(t time.Time) *time.Time {
 	}
 	return &t
 }
+
+func Ptr2UnixMillisecond(t *time.Time) int64 {
+	return GetUnixMillisecond(Ptr2Time(t))
+}

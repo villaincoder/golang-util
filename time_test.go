@@ -91,3 +91,10 @@ func TestPtr2Time(t *testing.T) {
 		t.Fatal("pointer to time error")
 	}
 }
+
+func TestPtr2UnixMillisecond(t *testing.T) {
+	nowTime := time.Now()
+	if Ptr2UnixMillisecond(&nowTime) != GetUnixMillisecond(nowTime) {
+		t.Fatal("Ptr2UnixMillisecond error")
+	}
+}
