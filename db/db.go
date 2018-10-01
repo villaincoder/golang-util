@@ -18,6 +18,9 @@ type OpenConfig struct {
 }
 
 func LoadEnvDBConfig(config *OpenConfig) *OpenConfig {
+	if config == nil {
+		config = &OpenConfig{}
+	}
 	config.Host = util.GetEnv("DB_HOST", util.StringFallback(config.Host, "localhost"))
 	config.Port = util.GetEnv("DB_PORT", util.StringFallback(config.Port, "5432"))
 	config.User = util.GetEnv("DB_USER", util.StringFallback(config.User, "postgres"))

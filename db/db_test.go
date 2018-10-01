@@ -11,6 +11,9 @@ func TestLoadEnvDBConfig(t *testing.T) {
 	if config.Debug != true {
 		t.Fatal("config debug error")
 	}
+	if LoadEnvDBConfig(nil) == nil {
+		t.Fatal("load env db config with nil error")
+	}
 }
 
 func TestNewPostgresDB(t *testing.T) {
