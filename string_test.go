@@ -59,3 +59,12 @@ func TestPtrs2Strs(t *testing.T) {
 		t.Fatal("non-nil pointer item to string item error")
 	}
 }
+
+func TestStringFallback(t *testing.T) {
+	if StringFallback("", "123") != "123" {
+		t.Fatal("get empty string fallback error")
+	}
+	if StringFallback("hello", "123") != "hello" {
+		t.Fatal("get non-empty string fallback error")
+	}
+}
