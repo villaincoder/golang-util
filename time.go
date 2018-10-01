@@ -17,11 +17,6 @@ func TrimUnixMillisecondToDate(unixMillisecond int64) time.Time {
 	return TrimTimeToDate(UnixMillisecondToTime(unixMillisecond))
 }
 
-func TrimUnixMillisecondToDateP(unixMillisecond int64) *time.Time {
-	date := TrimTimeToDate(UnixMillisecondToTime(unixMillisecond))
-	return &date
-}
-
 func GetUnixMillisecond(time time.Time) int64 {
 	millisecond := time.UnixNano() / 1e6
 	if millisecond < 0 {
@@ -30,19 +25,12 @@ func GetUnixMillisecond(time time.Time) int64 {
 	return millisecond
 }
 
-func GetUnixMillisecondP(time *time.Time) int64 {
-	if time == nil {
-		return 0
-	}
-	millisecond := time.UnixNano() / 1e6
-	if millisecond < 0 {
-		return 0
-	}
-	return millisecond
+func GetCurrentUnixMillisecond() int64 {
+	return GetUnixMillisecond(time.Now())
 }
 
 func UnixMillisecondToTime(unixMillisecond int64) time.Time {
-	if unixMillisecond == 0 {
+	if unixMillisecond <= 0 {
 		return UnixZero
 	}
 	second := unixMillisecond / 1000
@@ -50,36 +38,20 @@ func UnixMillisecondToTime(unixMillisecond int64) time.Time {
 	return time.Unix(second, nanoseconds)
 }
 
-func UnixMillisecondToTimeP(unixMillisecond int64) *time.Time {
-	t := UnixMillisecondToTime(unixMillisecond)
-	return &t
-}
-
 func IsInvalidTime(time time.Time) bool {
 	return GetUnixMillisecond(time) == 0
 }
 
-func IsInvalidTimeP(time *time.Time) bool {
-	if time == nil {
-		return true
-	}
-	return IsInvalidTime(*time)
-}
-
-func P2Time(t *time.Time) time.Time {
+func Ptr2Time(t *time.Time) time.Time {
 	if t == nil {
 		return UnixZero
 	}
 	return *t
 }
 
-func Time2P(t time.Time) *time.Time {
+func Time2Ptr(t time.Time) *time.Time {
 	if IsInvalidTime(t) {
 		return nil
 	}
 	return &t
-}
-
-func NowTime() *time.Time {
-	return Time2P(time.Now())
 }

@@ -1,26 +1,37 @@
 package util
 
-func P2Str(s *string) string {
+func Ptr2Str(s *string) string {
 	if s == nil {
 		return ""
 	}
 	return *s
 }
 
-func Str2P(s string) *string {
+func Str2Ptr(s string) *string {
 	if s == "" {
 		return nil
 	}
 	return &s
 }
 
-func StrArr2PArr(sa []string) []*string {
-	if sa == nil {
+func Strs2Ptrs(strs []string) []*string {
+	if strs == nil {
 		return nil
 	}
-	result := make([]*string, len(sa))
-	for index, s := range sa {
-		result[index] = Str2P(s)
+	result := make([]*string, len(strs))
+	for index, str := range strs {
+		result[index] = Str2Ptr(str)
+	}
+	return result
+}
+
+func Ptrs2Strs(ptrs []*string) []string {
+	if ptrs == nil {
+		return nil
+	}
+	result := make([]string, len(ptrs))
+	for index, ptr := range ptrs {
+		result[index] = Ptr2Str(ptr)
 	}
 	return result
 }
