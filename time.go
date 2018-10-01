@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -58,4 +59,9 @@ func Time2Ptr(t time.Time) *time.Time {
 
 func Ptr2UnixMillisecond(t *time.Time) int64 {
 	return GetUnixMillisecond(Ptr2Time(t))
+}
+
+func FormatMinutes(minutes uint64) string {
+	hours := minutes / 60
+	return fmt.Sprintf("%d:%d", hours, minutes-hours*60)
 }

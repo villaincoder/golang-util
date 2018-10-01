@@ -98,3 +98,12 @@ func TestPtr2UnixMillisecond(t *testing.T) {
 		t.Fatal("Ptr2UnixMillisecond error")
 	}
 }
+
+func TestFormatMinutes(t *testing.T) {
+	if FormatMinutes(10) != "0:10" {
+		t.Fatal("FormatMinutes 10 error")
+	}
+	if FormatMinutes(100) != "1:40" {
+		t.Fatal("FormatMinutes 100 error")
+	}
+}
