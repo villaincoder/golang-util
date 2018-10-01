@@ -33,3 +33,17 @@ func TestOpenPostgres(t *testing.T) {
 	}
 	t.Log("err2", err2)
 }
+
+func TestResetPostgresSchema(t *testing.T) {
+	config := LoadEnvOpenConfig(&OpenConfig{
+		Debug: true,
+	})
+	db, err := OpenPostgres(config)
+	if err != nil {
+		t.Fatal("open postgres error", err)
+	}
+	err = ResetPostgresSchema(db, "public", config.User)
+	if err != nil {
+		t.Fatal("reset postgres schema error", err)
+	}
+}

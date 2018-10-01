@@ -46,3 +46,16 @@ func OpenPostgres(config *OpenConfig) (db *gorm.DB, err error) {
 	}
 	return
 }
+
+func ResetPostgresSchema(db *gorm.DB, schema, user string) (err error) {
+	if err = db.Exec(fmt.Sprintf("DROP SCHEMA IF EXISTS %s CASCADE;", schema)).Error; err != nil {
+		return
+	}
+	if err = db.Exec(fmt.Sprintf("CREATE SCHEMA %s;", schema)).Error; err != nil {
+		return
+	}
+	if err = db.Exec(fmt.Sprintf("GRANT ALL ON SCHEMA %s TO %s;", schema, user)).Error; err != nil {
+		return
+	}
+	return
+}
