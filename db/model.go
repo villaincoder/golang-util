@@ -24,14 +24,8 @@ func NewBaseModel() BaseModel {
 	}
 }
 
-func MigrateModels(db *gorm.DB, dropExists bool, models ...interface{}) (err error) {
+func MigrateModels(db *gorm.DB, models ...interface{}) (err error) {
 	for _, model := range models {
-		if dropExists {
-			err = db.DropTableIfExists(model).Error
-			if err != nil {
-				return
-			}
-		}
 		err = db.AutoMigrate(model).Error
 		if err != nil {
 			return

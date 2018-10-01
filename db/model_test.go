@@ -25,13 +25,17 @@ func TestMigrateModels(t *testing.T) {
 	if err != nil {
 		t.Fatal("open postgres db error", err)
 	}
+	err = ResetPostgresSchema(db, "public", config.User)
+	if err != nil {
+		t.Fatal("reset postgres schema error", err)
+	}
 
-	err1 := MigrateModels(db, true, &TestORMStruct1{}, &TestORMStruct2{})
+	err1 := MigrateModels(db, &TestORMStruct1{}, &TestORMStruct2{})
 	if err1 != nil {
 		t.Fatal("migrate models error", err1)
 	}
 
-	err2 := MigrateModels(db, true, nil)
+	err2 := MigrateModels(db, nil)
 	if err2 == nil {
 		t.Fatal("migrate nil model error")
 	}
@@ -48,7 +52,11 @@ func TestCreateModels(t *testing.T) {
 	if err != nil {
 		t.Fatal("open postgres db error", err)
 	}
-	err = MigrateModels(db, true, &TestORMStruct1{}, &TestORMStruct2{})
+	err = ResetPostgresSchema(db, "public", config.User)
+	if err != nil {
+		t.Fatal("reset postgres schema error", err)
+	}
+	err = MigrateModels(db, &TestORMStruct1{}, &TestORMStruct2{})
 	if err != nil {
 		t.Fatal("migrate models error", err)
 	}
