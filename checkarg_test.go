@@ -61,7 +61,7 @@ func TestCheckArgs(t *testing.T) {
 	t.Log("err6", err6)
 
 	err7 := CheckArgs(map[string]Checker{
-		"key": &UnixMillisecondChecker{Value: GetCurrentUnixMillisecond()},
+		"key": &UnixMillisecondChecker{Value: GetNowUnixMillisecond()},
 	})
 	if err7 != nil {
 		t.Fatal("check now unix millisecond error", err7)

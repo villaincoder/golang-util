@@ -6,6 +6,7 @@ import (
 )
 
 var LocalCN, _ = time.LoadLocation("Asia/Shanghai")
+var LocalGMT, _ = time.LoadLocation("GMT")
 var UnixZero = time.Unix(0, 0)
 
 func TrimTimeToDate(t time.Time) time.Time {
@@ -26,7 +27,7 @@ func GetUnixMillisecond(time time.Time) int64 {
 	return millisecond
 }
 
-func GetCurrentUnixMillisecond() int64 {
+func GetNowUnixMillisecond() int64 {
 	return GetUnixMillisecond(time.Now())
 }
 
@@ -59,6 +60,14 @@ func Time2Ptr(t time.Time) *time.Time {
 
 func Ptr2UnixMillisecond(t *time.Time) int64 {
 	return GetUnixMillisecond(Ptr2Time(t))
+}
+
+func FormatUnixMillisecond(unixMillisecond int64, layout string, local *time.Location) string {
+	t := UnixMillisecondToTime(unixMillisecond)
+	if local != nil {
+		t = t.In(local)
+	}
+	return t.Format(layout)
 }
 
 func FormatMinutes(minutes uint64) string {

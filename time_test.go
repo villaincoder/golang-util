@@ -36,8 +36,8 @@ func TestGetUnixMillisecond(t *testing.T) {
 	t.Log("ms2", ms2)
 }
 
-func TestGetCurrentUnixMillisecond(t *testing.T) {
-	t.Log("current unix millisecond", GetCurrentUnixMillisecond())
+func TestGetNowUnixMillisecond(t *testing.T) {
+	t.Log("current unix millisecond", GetNowUnixMillisecond())
 }
 
 func TestUnixMillisecondToTime(t *testing.T) {
@@ -97,6 +97,11 @@ func TestPtr2UnixMillisecond(t *testing.T) {
 	if Ptr2UnixMillisecond(&nowTime) != GetUnixMillisecond(nowTime) {
 		t.Fatal("Ptr2UnixMillisecond error")
 	}
+}
+
+func TestFormatUnixMillisecond(t *testing.T) {
+	t.Log(FormatUnixMillisecond(GetNowUnixMillisecond(), "2006-01-02 15:04:05.999999999 -0700 MST", nil))
+	t.Log(FormatUnixMillisecond(GetNowUnixMillisecond(), "2006-01-02 15:04:05.999999999 -0700 MST", LocalGMT))
 }
 
 func TestFormatMinutes(t *testing.T) {
