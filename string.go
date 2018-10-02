@@ -36,7 +36,7 @@ func Ptrs2Strs(ptrs []*string) []string {
 	return result
 }
 
-func StringFallback(str, fallback string) string {
+func StrFallback(str, fallback string) string {
 	if str == "" {
 		return fallback
 	}

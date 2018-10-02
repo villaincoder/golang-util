@@ -61,10 +61,10 @@ func TestPtrs2Strs(t *testing.T) {
 }
 
 func TestStringFallback(t *testing.T) {
-	if StringFallback("", "123") != "123" {
+	if StrFallback("", "123") != "123" {
 		t.Fatal("get empty string fallback error")
 	}
-	if StringFallback("hello", "123") != "hello" {
+	if StrFallback("hello", "123") != "hello" {
 		t.Fatal("get non-empty string fallback error")
 	}
 }

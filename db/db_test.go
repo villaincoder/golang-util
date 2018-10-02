@@ -4,20 +4,20 @@ import (
 	"testing"
 )
 
-func TestLoadEnvOpenConfig(t *testing.T) {
-	config := LoadEnvOpenConfig(&OpenConfig{
+func TestLoadEnvConfig(t *testing.T) {
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	if config.Debug != true {
 		t.Fatal("config debug error")
 	}
-	if LoadEnvOpenConfig(nil) == nil {
+	if LoadEnvConfig(nil) == nil {
 		t.Fatal("load env config with nil error")
 	}
 }
 
 func TestOpenPostgres(t *testing.T) {
-	config := LoadEnvOpenConfig(&OpenConfig{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db1, err1 := OpenPostgres(config)
@@ -35,7 +35,7 @@ func TestOpenPostgres(t *testing.T) {
 }
 
 func TestResetPostgresSchema(t *testing.T) {
-	config := LoadEnvOpenConfig(&OpenConfig{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db, err := OpenPostgres(config)

@@ -112,3 +112,12 @@ func TestFormatMinutes(t *testing.T) {
 		t.Fatal("FormatMinutes 100 error")
 	}
 }
+
+func TestDurationFallback(t *testing.T) {
+	if DurationFallback(0, time.Hour*2) != time.Hour*2 {
+		t.Fatal("DurationFallback 0 error")
+	}
+	if DurationFallback(time.Minute*2, time.Hour*2) != time.Minute*2 {
+		t.Fatal("DurationFallback 2 minute error")
+	}
+}

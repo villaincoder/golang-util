@@ -9,15 +9,15 @@ import (
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
 )
 
-type ServeConfig struct {
+type Config struct {
 	Port string
 }
 
-func LoadEnvServeConfig(config *ServeConfig) *ServeConfig {
+func LoadEnvConfig(config *Config) *Config {
 	if config == nil {
-		config = &ServeConfig{}
+		config = &Config{}
 	}
-	config.Port = util.GetEnv("DB_PORT", util.StringFallback(config.Port, "50051"))
+	config.Port = util.GetEnvStr("DB_PORT", util.StrFallback(config.Port, "50051"))
 	return config
 }
 
@@ -30,7 +30,7 @@ func NewServer(serviceRegister ServiceRegisterFunc) (server *grpc.Server) {
 	return
 }
 
-func Serve(config *ServeConfig, server *grpc.Server) (err error) {
+func Serve(config *Config, server *grpc.Server) (err error) {
 	listener, err := net.Listen("tcp", ":"+config.Port)
 	if err != nil {
 		return

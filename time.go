@@ -74,3 +74,10 @@ func FormatMinutes(minutes uint64) string {
 	hours := minutes / 60
 	return fmt.Sprintf("%d:%d", hours, minutes-hours*60)
 }
+
+func DurationFallback(duration, fallback time.Duration) time.Duration {
+	if duration > 0 {
+		return duration
+	}
+	return fallback
+}

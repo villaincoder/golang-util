@@ -18,7 +18,7 @@ func TestNewBaseModel(t *testing.T) {
 }
 
 func TestMigrateModels(t *testing.T) {
-	config := LoadEnvOpenConfig(&OpenConfig{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db, err := OpenPostgres(config)
@@ -45,7 +45,7 @@ func TestMigrateModels(t *testing.T) {
 }
 
 func TestCreateModels(t *testing.T) {
-	config := LoadEnvOpenConfig(&OpenConfig{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db, err := OpenPostgres(config)
