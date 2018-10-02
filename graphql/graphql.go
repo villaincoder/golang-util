@@ -30,6 +30,9 @@ func LoadEnvHandlerConfig(config *handler.Config) *handler.Config {
 		} else if web == "GraphiQL" {
 			config.Playground = false
 			config.GraphiQL = true
+		} else {
+			config.Playground = false
+			config.GraphiQL = false
 		}
 	}
 	return config
