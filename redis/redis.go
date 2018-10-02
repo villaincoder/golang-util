@@ -15,6 +15,12 @@ func LoadEnvConfig(config *redis.Options) *redis.Options {
 	return config
 }
 
-func OpenRedis(config *redis.Options) *redis.Client {
-	return redis.NewClient(config)
+func OpenRedis(config *redis.Options) (client *redis.Client, err error) {
+	client = redis.NewClient(config)
+	err = client.Ping().Err()
+	if err != nil {
+		client.Close()
+		client = nil
+	}
+	return
 }
