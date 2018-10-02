@@ -13,6 +13,8 @@ var DefaultOptionsHandler = func(w http.ResponseWriter, r *http.Request, _ httpr
 	AllowAllHeaders(w, r)
 }
 
+type RouterRegisterFunc func(router *httprouter.Router)
+
 type Config struct {
 	Port string
 }
@@ -25,9 +27,10 @@ func LoadEnvConfig(config *Config) *Config {
 	return config
 }
 
-func NewRouter() *httprouter.Router {
+func NewRouter(routerRegister RouterRegisterFunc) *httprouter.Router {
 	router := httprouter.New()
 	router.OPTIONS("/*path", DefaultOptionsHandler)
+	routerRegister(router)
 	return router
 }
 
