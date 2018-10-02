@@ -21,11 +21,11 @@ func LoadEnvConfig(config *Config) *Config {
 	return config
 }
 
-type ServiceRegisterFunc func(server *grpc.Server)
+type RegisterServiceFunc func(server *grpc.Server)
 
-func NewServer(serviceRegister ServiceRegisterFunc) (server *grpc.Server) {
+func NewServer(registerService RegisterServiceFunc) (server *grpc.Server) {
 	server = grpc.NewServer()
-	serviceRegister(server)
+	registerService(server)
 	reflection.Register(server)
 	return
 }

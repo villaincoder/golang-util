@@ -1,6 +1,7 @@
 module istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git
 
 require (
+	github.com/agnivade/levenshtein v1.0.1 // indirect
 	github.com/ajg/form v0.0.0-20160822230020-523a5da1a92f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20180901172138-1eb28afdf9b6 // indirect
@@ -14,6 +15,10 @@ require (
 	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c // indirect
+	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/graphql-go/graphql v0.7.6 // indirect
+	github.com/graphql-go/handler v0.2.2-0.20180922162246-83cde2468fa5 // indirect
+	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/jinzhu/gorm v1.9.1
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
@@ -42,6 +47,7 @@ require (
 	github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e // indirect
 	github.com/tidwall/tinyqueue v0.0.0-20180302190814-1e39f5511563 // indirect
 	github.com/valyala/fasthttp v1.0.0 // indirect
+	github.com/vektah/gqlparser v0.0.0-20181002002754-f119686bf1d4 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v0.0.0-20180816142147-da425ebb7609 // indirect

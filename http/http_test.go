@@ -1,6 +1,10 @@
 package http
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/julienschmidt/httprouter"
+)
 
 func TestLoadEnvConfig(t *testing.T) {
 	config := LoadEnvConfig(&Config{
@@ -15,6 +19,8 @@ func TestLoadEnvConfig(t *testing.T) {
 }
 
 func TestNewRouter(t *testing.T) {
-	router := NewRouter()
+	router := NewRouter(func(router *httprouter.Router) {
+		t.Log("register route")
+	})
 	t.Log(router)
 }
