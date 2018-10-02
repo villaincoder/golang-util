@@ -16,6 +16,7 @@ require (
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/graph-gophers/dataloader v4.1.1-0.20180905203710-65f631c65623+incompatible // indirect
 	github.com/graphql-go/graphql v0.7.6
 	github.com/graphql-go/handler v0.2.2-0.20180922162246-83cde2468fa5
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
@@ -33,6 +34,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.9.0 // indirect
 	github.com/moul/http2curl v0.0.0-20170919181001-9ac6cf4d929b // indirect
 	github.com/onsi/gomega v1.4.2 // indirect
+	github.com/opentracing/opentracing-go v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
 	github.com/sergi/go-diff v1.0.0 // indirect
@@ -60,5 +62,6 @@ require (
 	google.golang.org/grpc v1.15.0
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/go-oauth2/redis.v1 v1.1.0
+	gopkg.in/nicksrandall/dataloader.v5 v5.0.0-20180104184831-78139374585c // indirect
 	gopkg.in/oauth2.v3 v3.9.0
 )

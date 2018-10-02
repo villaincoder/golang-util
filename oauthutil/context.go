@@ -8,7 +8,7 @@ import (
 
 const CtxKey = "CTX_OAUTH_REQUEST_HANDLER"
 
-func WithRequestHandler(server *Server, request *http.Request) context.Context {
+func (server *Server) NewContext(request *http.Request) context.Context {
 	return context.WithValue(request.Context(), CtxKey, &RequestHandler{
 		Server:  server,
 		Request: request,
@@ -18,7 +18,7 @@ func WithRequestHandler(server *Server, request *http.Request) context.Context {
 func GetRequestHandler(ctx context.Context) (handler *RequestHandler, err error) {
 	handler = ctx.Value(CtxKey).(*RequestHandler)
 	if handler == nil {
-		err = errors.New("context not found request handler")
+		err = errors.New("context not found oauth request handler")
 	}
 	return
 }
