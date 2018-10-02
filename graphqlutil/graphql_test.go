@@ -1,1 +1,1 @@
-package gqlutil
+package graphqlutil
