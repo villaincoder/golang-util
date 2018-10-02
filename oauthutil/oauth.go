@@ -16,12 +16,9 @@ import (
 )
 
 type Config struct {
-	RedisConfig                  *redis.Config
-	AccessTokenExp               time.Duration
-	RefreshTokenExp              time.Duration
-	Clients                      []Client
-	PasswordAuthorizationHandler server.PasswordAuthorizationHandler
-	InternalErrorHandler         server.InternalErrorHandler
+	RedisConfig     *redis.Config
+	AccessTokenExp  time.Duration
+	RefreshTokenExp time.Duration
 }
 
 func loadEnvConfig(config *Config) *Config {
@@ -61,12 +58,12 @@ func (server *Server) HandleTokenRequest(w http.ResponseWriter, r *http.Request)
 	server.Base.HandleTokenRequest(w, r)
 }
 
-func NewServer(config *Config) *Server {
+func NewServer(config *Config, clients []Client, passwordAuthorizationHandler server.PasswordAuthorizationHandler, internalErrorHandler server.InternalErrorHandler) *Server {
 	config = loadEnvConfig(config)
 	manager := manage.NewDefaultManager()
 	manager.MustTokenStorage(redis.NewTokenStore(config.RedisConfig))
 	clientStore := store.NewClientStore()
-	for _, client := range config.Clients {
+	for _, client := range clients {
 		clientStore.Set(client.Id, &models.Client{ID: client.Id, Secret: client.Secret})
 	}
 	manager.MapClientStorage(clientStore)
@@ -85,8 +82,8 @@ func NewServer(config *Config) *Server {
 	base.SetAllowedGrantType(oauth2.PasswordCredentials, oauth2.Refreshing)
 	base.SetAllowGetAccessRequest(false)
 	base.SetClientInfoHandler(server.ClientBasicHandler)
-	base.SetPasswordAuthorizationHandler(config.PasswordAuthorizationHandler)
-	base.SetInternalErrorHandler(config.InternalErrorHandler)
+	base.SetPasswordAuthorizationHandler(passwordAuthorizationHandler)
+	base.SetInternalErrorHandler(internalErrorHandler)
 
 	oauth := &Server{}
 	oauth.Base = base
