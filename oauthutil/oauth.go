@@ -1,4 +1,4 @@
-package oauth
+package oauthutil
 
 import (
 	"net/http"

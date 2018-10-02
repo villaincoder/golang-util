@@ -1,4 +1,4 @@
-package graphql
+package gqlutil
 
 import (
 	"github.com/graphql-go/graphql"

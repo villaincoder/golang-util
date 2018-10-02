@@ -10,14 +10,14 @@ require (
 	github.com/fatih/structs v1.0.0 // indirect
 	github.com/gavv/httpexpect v0.0.0-20180803094507-bdde30871313 // indirect
 	github.com/gavv/monotime v0.0.0-20171021193802-6f8212e8d10d // indirect
-	github.com/go-redis/redis v6.14.1+incompatible // indirect
+	github.com/go-redis/redis v6.14.1+incompatible
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
-	github.com/graphql-go/graphql v0.7.6 // indirect
-	github.com/graphql-go/handler v0.2.2-0.20180922162246-83cde2468fa5 // indirect
+	github.com/graphql-go/graphql v0.7.6
+	github.com/graphql-go/handler v0.2.2-0.20180922162246-83cde2468fa5
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/jinzhu/gorm v1.9.1
