@@ -24,17 +24,17 @@ type Config struct {
 	InternalErrorHandler         server.InternalErrorHandler
 }
 
-func LoadEnvConfig(config *Config) *Config {
+func loadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
-	config.RedisConfig = LoadEnvRedisConfig(config.RedisConfig)
+	config.RedisConfig = loadEnvRedisConfig(config.RedisConfig)
 	config.AccessTokenExp = util.GetEnvDuration("OAUTH_ACCESS_TOKEN_EXP", util.DurationFallback(config.AccessTokenExp, time.Hour*24*7))
 	config.RefreshTokenExp = util.GetEnvDuration("OAUTH_REFRESH_TOKEN_EXP", util.DurationFallback(config.AccessTokenExp, time.Hour*24*30))
 	return config
 }
 
-func LoadEnvRedisConfig(config *redis.Config) *redis.Config {
+func loadEnvRedisConfig(config *redis.Config) *redis.Config {
 	var defaultDB int
 	if config == nil {
 		config = &redis.Config{}
@@ -62,6 +62,7 @@ func (server *Server) HandleTokenRequest(w http.ResponseWriter, r *http.Request)
 }
 
 func NewServer(config *Config) *Server {
+	config = loadEnvConfig(config)
 	manager := manage.NewDefaultManager()
 	manager.MustTokenStorage(redis.NewTokenStore(config.RedisConfig))
 	clientStore := store.NewClientStore()

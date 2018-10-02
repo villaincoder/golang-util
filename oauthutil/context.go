@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-const CtxKey = "oauth"
+const CtxKey = "CTX_OAUTH_REQUEST_HANDLER"
 
 func WithRequestHandler(server *Server, request *http.Request) context.Context {
 	return context.WithValue(request.Context(), CtxKey, &RequestHandler{

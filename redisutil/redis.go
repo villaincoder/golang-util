@@ -5,7 +5,7 @@ import (
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
 )
 
-func LoadEnvConfig(config *redis.Options) *redis.Options {
+func loadEnvConfig(config *redis.Options) *redis.Options {
 	if config == nil {
 		config = &redis.Options{}
 	}
@@ -16,6 +16,7 @@ func LoadEnvConfig(config *redis.Options) *redis.Options {
 }
 
 func OpenRedis(config *redis.Options) (client *redis.Client, err error) {
+	config = loadEnvConfig(config)
 	client = redis.NewClient(config)
 	err = client.Ping().Err()
 	if err != nil {

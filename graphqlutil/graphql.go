@@ -12,15 +12,15 @@ type Config struct {
 	HandlerConfig *handler.Config
 }
 
-func LoadEnvConfig(config *Config) *Config {
+func loadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
-	config.HandlerConfig = LoadEnvHandlerConfig(config.HandlerConfig)
+	config.HandlerConfig = loadEnvHandlerConfig(config.HandlerConfig)
 	return config
 }
 
-func LoadEnvHandlerConfig(config *handler.Config) *handler.Config {
+func loadEnvHandlerConfig(config *handler.Config) *handler.Config {
 	if config == nil {
 		config = handler.NewConfig()
 		web := util.GetEnvStr("GQL_WEB", "")
@@ -39,6 +39,7 @@ func LoadEnvHandlerConfig(config *handler.Config) *handler.Config {
 }
 
 func NewHandler(config *Config, registerFields RegisterFieldsFunc) (h *handler.Handler, err error) {
+	config = loadEnvConfig(config)
 	query := graphql.NewObject(graphql.ObjectConfig{Name: "Query", Fields: graphql.Fields{}})
 	mutation := graphql.NewObject(graphql.ObjectConfig{Name: "Mutation", Fields: graphql.Fields{}})
 	registerFields(query, mutation)

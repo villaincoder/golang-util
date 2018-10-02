@@ -19,7 +19,7 @@ type Config struct {
 	Port string
 }
 
-func LoadEnvConfig(config *Config) *Config {
+func loadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
@@ -35,6 +35,7 @@ func NewRouter(registerRoute RegisterRouteFunc) *httprouter.Router {
 }
 
 func Serve(config *Config, router *httprouter.Router) (err error) {
+	config = loadEnvConfig(config)
 	err = http.ListenAndServe(":"+config.Port, router)
 	return
 }
