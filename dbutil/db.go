@@ -17,7 +17,7 @@ type Config struct {
 	Debug    bool
 }
 
-func loadEnvConfig(config *Config) *Config {
+func LoadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
@@ -31,7 +31,6 @@ func loadEnvConfig(config *Config) *Config {
 }
 
 func OpenPostgres(config *Config) (db *gorm.DB, err error) {
-	config = loadEnvConfig(config)
 	db, err = gorm.Open("postgres",
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			config.Host, config.Port, config.User, config.Password, config.Name))

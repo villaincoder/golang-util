@@ -21,7 +21,7 @@ type Config struct {
 	RefreshTokenExp time.Duration
 }
 
-func loadEnvConfig(config *Config) *Config {
+func LoadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
@@ -59,7 +59,6 @@ func (server *Server) HandleTokenRequest(w http.ResponseWriter, r *http.Request)
 }
 
 func NewServer(config *Config, clients []Client, passwordAuthorizationHandler server.PasswordAuthorizationHandler, internalErrorHandler server.InternalErrorHandler) *Server {
-	config = loadEnvConfig(config)
 	manager := manage.NewDefaultManager()
 	manager.MustTokenStorage(redis.NewTokenStore(config.RedisConfig))
 	clientStore := store.NewClientStore()

@@ -15,7 +15,7 @@ type Config struct {
 	HandlerConfig *handler.Config
 }
 
-func loadEnvConfig(config *Config) *Config {
+func LoadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
@@ -42,7 +42,6 @@ func loadEnvHandlerConfig(config *handler.Config) *handler.Config {
 }
 
 func NewHandler(config *Config, registerFields RegisterFieldsFunc) (h *handler.Handler, err error) {
-	config = loadEnvConfig(config)
 	query := graphql.NewObject(graphql.ObjectConfig{Name: "Query", Fields: graphql.Fields{}})
 	mutation := graphql.NewObject(graphql.ObjectConfig{Name: "Mutation", Fields: graphql.Fields{}})
 	registerFields(query, mutation)

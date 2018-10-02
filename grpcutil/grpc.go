@@ -13,7 +13,7 @@ type Config struct {
 	Port string
 }
 
-func loadEnvConfig(config *Config) *Config {
+func LoadEnvConfig(config *Config) *Config {
 	if config == nil {
 		config = &Config{}
 	}
@@ -31,7 +31,6 @@ func NewServer(registerService RegisterServiceFunc) (server *grpc.Server) {
 }
 
 func Serve(config *Config, server *grpc.Server) (err error) {
-	config = loadEnvConfig(config)
 	listener, err := net.Listen("tcp", ":"+config.Port)
 	if err != nil {
 		return
