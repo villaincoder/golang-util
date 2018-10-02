@@ -19,7 +19,7 @@ require (
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
 	github.com/jtolds/gls v4.2.1+incompatible // indirect
-	github.com/julienschmidt/httprouter v0.0.0-20180715161854-348b672cd90d // indirect
+	github.com/julienschmidt/httprouter v0.0.0-20180715161854-348b672cd90d
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lib/pq v1.0.0 // indirect
