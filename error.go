@@ -6,7 +6,7 @@ import (
 	"runtime/debug"
 )
 
-func PrintErr(err error) {
+func PrintError(err error) {
 	log.Debugf(context.Background(), "%v", err)
 	debug.PrintStack()
 }
