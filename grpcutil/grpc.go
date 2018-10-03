@@ -37,9 +37,6 @@ func Serve(config *Config, server *grpc.Server) (err error) {
 		err = errors.WithStack(err)
 		return
 	}
-	if err = server.Serve(listener); err != nil {
-		err = errors.WithStack(err)
-		return
-	}
+	err = errors.WithStack(server.Serve(listener))
 	return
 }

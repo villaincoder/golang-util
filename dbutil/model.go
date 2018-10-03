@@ -1,6 +1,7 @@
 package dbutil
 
 import (
+	"github.com/pkg/errors"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -28,6 +29,7 @@ func MigrateModels(db *gorm.DB, models ...interface{}) (err error) {
 	for _, model := range models {
 		err = db.AutoMigrate(model).Error
 		if err != nil {
+			err = errors.WithStack(err)
 			return
 		}
 	}
@@ -38,6 +40,7 @@ func CreateModels(db *gorm.DB, models ...interface{}) (err error) {
 	for _, model := range models {
 		err = db.Create(model).Error
 		if err != nil {
+			err = errors.WithStack(err)
 			return
 		}
 	}

@@ -2,6 +2,7 @@ package dbutil
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -35,6 +36,7 @@ func OpenPostgres(config *Config) (db *gorm.DB, err error) {
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			config.Host, config.Port, config.User, config.Password, config.Name))
 	if err != nil {
+		err = errors.WithStack(err)
 		if db != nil {
 			db.Close()
 			db = nil
@@ -49,12 +51,15 @@ func OpenPostgres(config *Config) (db *gorm.DB, err error) {
 
 func ResetPostgresSchema(db *gorm.DB, schema, user string) (err error) {
 	if err = db.Exec(fmt.Sprintf("DROP SCHEMA IF EXISTS %s CASCADE;", schema)).Error; err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	if err = db.Exec(fmt.Sprintf("CREATE SCHEMA %s;", schema)).Error; err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	if err = db.Exec(fmt.Sprintf("GRANT ALL ON SCHEMA %s TO %s;", schema, user)).Error; err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	return

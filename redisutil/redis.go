@@ -2,6 +2,7 @@ package redisutil
 
 import (
 	"github.com/go-redis/redis"
+	"github.com/pkg/errors"
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
 )
 
@@ -17,7 +18,7 @@ func LoadEnvConfig(config *redis.Options) *redis.Options {
 
 func OpenRedis(config *redis.Options) (client *redis.Client, err error) {
 	client = redis.NewClient(config)
-	err = client.Ping().Err()
+	err = errors.WithStack(client.Ping().Err())
 	if err != nil {
 		client.Close()
 		client = nil

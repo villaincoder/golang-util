@@ -1,6 +1,7 @@
 package httputil
 
 import (
+	"github.com/pkg/errors"
 	"net/http"
 
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
@@ -35,7 +36,7 @@ func NewRouter(registerRoute RegisterRouteFunc) *httprouter.Router {
 }
 
 func Serve(config *Config, router *httprouter.Router) (err error) {
-	err = http.ListenAndServe(":"+config.Port, router)
+	err = errors.WithStack(http.ListenAndServe(":"+config.Port, router))
 	return
 }
 

@@ -1,7 +1,6 @@
 package util
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -148,9 +147,9 @@ func getCheckCallerName() (name string) {
 func CheckArgs(fields map[string]Checker) (err error) {
 	for key, checker := range fields {
 		if checker == nil {
-			err = errors.New(fmt.Sprintf("%s check %s error: checker is nil", getCheckCallerName(), key))
+			err = fmt.Errorf("%s check %s error: checker is nil", getCheckCallerName(), key)
 		} else if !checker.Check() {
-			err = errors.New(fmt.Sprintf("%s check %s error: %s", getCheckCallerName(), key, checker.Error()))
+			err = fmt.Errorf("%s check %s error: %s", getCheckCallerName(), key, checker.Error())
 		}
 	}
 	return
