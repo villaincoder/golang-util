@@ -188,4 +188,27 @@ func TestCheckArgs(t *testing.T) {
 	if err23 != nil {
 		t.Fatal("check uuid error", err23)
 	}
+
+	err24 := CheckArgs(map[string]Checker{
+		"key": &UUIDArrayChecker{Value: nil},
+	})
+	if err24 == nil {
+		t.Fatal("check nil uuid array error")
+	}
+	t.Log("err24", err24)
+
+	err25 := CheckArgs(map[string]Checker{
+		"key": &UUIDArrayChecker{Value: []string{"1", "339dc43e-d105-472c-bb6f-e47b6d872051", "339dc43e-d105-472c-bb6f-e47b6d872052"}},
+	})
+	if err25 == nil {
+		t.Fatal("check invalid item uuid array error")
+	}
+	t.Log("err25", err25)
+
+	err26 := CheckArgs(map[string]Checker{
+		"key": &StringArrayChecker{Value: []string{"339dc43e-d105-472c-bb6f-e47b6d872051", "339dc43e-d105-472c-bb6f-e47b6d872052", "339dc43e-d105-472c-bb6f-e47b6d872053"}},
+	})
+	if err26 != nil {
+		t.Fatal("check valid item uuid array error", err26)
+	}
 }

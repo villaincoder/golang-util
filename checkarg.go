@@ -140,6 +140,29 @@ func (c *UUIDChecker) Error() string {
 	return "UUIDChecker value is invalid"
 }
 
+type UUIDArrayChecker struct {
+	Value []string
+	error string
+}
+
+func (c *UUIDArrayChecker) Check() bool {
+	if c.Value == nil {
+		c.error = "UUIDArrayChecker value is nil"
+		return false
+	}
+	for index, value := range c.Value {
+		if !IsInvalidUUID(value) {
+			c.error = fmt.Sprintf("UUIDArrayChecker item %d is invalid", index)
+			return false
+		}
+	}
+	return true
+}
+
+func (c *UUIDArrayChecker) Error() string {
+	return c.error
+}
+
 func getCheckCallerName() (name string) {
 	return GetCallerName(2)
 }
