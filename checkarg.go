@@ -151,7 +151,7 @@ func (c *UUIDArrayChecker) Check() bool {
 		return false
 	}
 	for index, value := range c.Value {
-		if !IsInvalidUUID(value) {
+		if IsInvalidUUID(value) {
 			c.error = fmt.Sprintf("UUIDArrayChecker item %d is invalid", index)
 			return false
 		}
