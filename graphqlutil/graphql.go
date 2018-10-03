@@ -1,14 +1,11 @@
 package graphqlutil
 
 import (
-	"context"
 	"fmt"
-	"github.com/pkg/errors"
-	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git/logutil"
-
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/language/ast"
 	"github.com/graphql-go/handler"
+	"github.com/pkg/errors"
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
 )
 
@@ -54,17 +51,8 @@ func NewHandler(config *Config, registerFields RegisterFieldsFunc) (h *handler.H
 		return
 	}
 	config.HandlerConfig.Schema = &schema
-	if config.HandlerConfig.ResultCallbackFn == nil {
-		config.HandlerConfig.ResultCallbackFn = resultCallback
-	}
 	h = handler.New(config.HandlerConfig)
 	return
-}
-
-func resultCallback(ctx context.Context, params *graphql.Params, result *graphql.Result, responseBody []byte) {
-	if result.HasErrors() {
-		logutil.Errf("%+v", result.Errors)
-	}
 }
 
 func MergeFields(query, mutation *graphql.Object, queryFieldMap, mutationFieldMap map[string]*graphql.Field) {

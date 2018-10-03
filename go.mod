@@ -17,7 +17,7 @@ require (
 	github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/graph-gophers/dataloader v4.1.1-0.20180905203710-65f631c65623+incompatible
-	github.com/graphql-go/graphql v0.7.7-0.20180912000844-cc8e9a91d6b8
+	github.com/graphql-go/graphql v0.7.6
 	github.com/graphql-go/handler v0.2.2-0.20180922162246-83cde2468fa5
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
