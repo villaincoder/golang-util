@@ -1,12 +1,11 @@
 package util
 
 import (
-	"context"
-	"google.golang.org/appengine/log"
+	"log"
 	"runtime/debug"
 )
 
 func PrintError(err error) {
-	log.Debugf(context.Background(), "%v", err)
+	log.Printf("[Error]:%v", err)
 	debug.PrintStack()
 }
