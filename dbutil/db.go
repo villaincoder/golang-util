@@ -2,6 +2,7 @@ package dbutil
 
 import (
 	"fmt"
+
 	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"
@@ -63,4 +64,8 @@ func ResetPostgresSchema(db *gorm.DB, schema, user string) (err error) {
 		return
 	}
 	return
+}
+
+func IsRecordNotFoundError(err error) bool {
+	return gorm.IsRecordNotFoundError(errors.Cause(err))
 }
