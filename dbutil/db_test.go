@@ -5,7 +5,7 @@ import (
 )
 
 func TestOpenPostgres(t *testing.T) {
-	config := loadEnvConfig(&Config{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db1, err1 := OpenPostgres(config)
@@ -23,7 +23,7 @@ func TestOpenPostgres(t *testing.T) {
 }
 
 func TestResetPostgresSchema(t *testing.T) {
-	config := loadEnvConfig(&Config{
+	config := LoadEnvConfig(&Config{
 		Debug: true,
 	})
 	db, err := OpenPostgres(config)

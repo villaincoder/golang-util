@@ -19,6 +19,7 @@ type Config struct {
 	RedisConfig     *redis.Config
 	AccessTokenExp  time.Duration
 	RefreshTokenExp time.Duration
+	MockUserId      string
 }
 
 func LoadEnvConfig(config *Config) *Config {
@@ -28,6 +29,7 @@ func LoadEnvConfig(config *Config) *Config {
 	config.RedisConfig = loadEnvRedisConfig(config.RedisConfig)
 	config.AccessTokenExp = util.GetEnvDuration("OAUTH_ACCESS_TOKEN_EXP", util.DurationFallback(config.AccessTokenExp, time.Hour*24*7))
 	config.RefreshTokenExp = util.GetEnvDuration("OAUTH_REFRESH_TOKEN_EXP", util.DurationFallback(config.AccessTokenExp, time.Hour*24*30))
+	config.MockUserId = util.GetEnvStr("OAUTH_MOCK_USER_ID", util.StrFallback(config.MockUserId, ""))
 	return config
 }
 
@@ -51,11 +53,12 @@ type Client struct {
 }
 
 type Server struct {
-	Base *server.Server
+	base       *server.Server
+	mockUserId string
 }
 
 func (server *Server) HandleTokenRequest(w http.ResponseWriter, r *http.Request) {
-	server.Base.HandleTokenRequest(w, r)
+	server.base.HandleTokenRequest(w, r)
 }
 
 func NewServer(config *Config, clients []Client, passwordAuthorizationHandler server.PasswordAuthorizationHandler, internalErrorHandler server.InternalErrorHandler) *Server {
@@ -84,9 +87,10 @@ func NewServer(config *Config, clients []Client, passwordAuthorizationHandler se
 	base.SetPasswordAuthorizationHandler(passwordAuthorizationHandler)
 	base.SetInternalErrorHandler(internalErrorHandler)
 
-	oauth := &Server{}
-	oauth.Base = base
-	return oauth
+	return &Server{
+		base:       base,
+		mockUserId: config.MockUserId,
+	}
 }
 
 type RequestHandler struct {
@@ -100,12 +104,17 @@ func (h *RequestHandler) GetUserId() (userId string, err error) {
 		userId = h.userId
 		return
 	}
-	tokenInfo, err := h.Server.Base.ValidationBearerToken(h.Request)
+	tokenInfo, err := h.Server.base.ValidationBearerToken(h.Request)
 	if err != nil {
-		return
+		if h.Server.mockUserId != "" {
+			userId = h.Server.mockUserId
+			h.userId = userId
+			err = nil
+		}
+	} else {
+		userId = tokenInfo.GetUserID()
+		h.userId = userId
 	}
-	userId = tokenInfo.GetUserID()
-	h.userId = userId
 	return
 }
 
