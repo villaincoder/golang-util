@@ -1,6 +1,7 @@
 package grpcutil
 
 import (
+	"github.com/pkg/errors"
 	"net"
 
 	"google.golang.org/grpc"
@@ -33,9 +34,11 @@ func NewServer(registerService RegisterServiceFunc) (server *grpc.Server) {
 func Serve(config *Config, server *grpc.Server) (err error) {
 	listener, err := net.Listen("tcp", ":"+config.Port)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	if err = server.Serve(listener); err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	return

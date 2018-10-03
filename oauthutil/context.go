@@ -2,7 +2,7 @@ package oauthutil
 
 import (
 	"context"
-	"errors"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -26,6 +26,7 @@ func GetRequestHandler(ctx context.Context) (handler *RequestHandler, err error)
 func GetContextOAuthUserId(ctx context.Context) (id string, err error) {
 	handler, err := GetRequestHandler(ctx)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	id, err = handler.GetUserId()
@@ -35,6 +36,7 @@ func GetContextOAuthUserId(ctx context.Context) (id string, err error) {
 func CheckContextOAuthToken(ctx context.Context) (err error) {
 	handler, err := GetRequestHandler(ctx)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	err = handler.CheckToken()

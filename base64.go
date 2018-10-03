@@ -3,11 +3,13 @@ package util
 import (
 	"encoding/base64"
 	"encoding/binary"
+	"github.com/pkg/errors"
 )
 
 func Base64ToUint64(base64String string) (uint64Value uint64, err error) {
 	bytes, err := base64.StdEncoding.DecodeString(base64String)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	uint64Value = binary.BigEndian.Uint64(bytes)

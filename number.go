@@ -1,8 +1,8 @@
 package util
 
 import (
-	"errors"
 	"fmt"
+	"github.com/pkg/errors"
 	"reflect"
 	"strconv"
 )
@@ -53,6 +53,7 @@ func ToUint64(value interface{}) (uint64Value uint64, err error) {
 func ToUint32(value interface{}) (uint32Value uint32, err error) {
 	uint64Value, err := ToUint64(value)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	uint32Value = uint32(uint64Value)
@@ -62,6 +63,7 @@ func ToUint32(value interface{}) (uint32Value uint32, err error) {
 func ToInt64(value interface{}) (int64Value int64, err error) {
 	uint64Value, err := ToUint64(value)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	int64Value = int64(uint64Value)
@@ -71,6 +73,7 @@ func ToInt64(value interface{}) (int64Value int64, err error) {
 func ToInt32(value interface{}) (int32Value int32, err error) {
 	uint64Value, err := ToUint64(value)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	int32Value = int32(uint64Value)
@@ -124,6 +127,7 @@ func ToFloat64(value interface{}) (float64Value float64, err error) {
 func ToFloat32(value interface{}) (float32Value float32, err error) {
 	float64Value, err := ToFloat64(value)
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	float32Value = float32(float64Value)

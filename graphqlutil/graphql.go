@@ -2,6 +2,7 @@ package graphqlutil
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/language/ast"
@@ -47,6 +48,7 @@ func NewHandler(config *Config, registerFields RegisterFieldsFunc) (h *handler.H
 	registerFields(query, mutation)
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{Query: query, Mutation: mutation})
 	if err != nil {
+		err = errors.WithStack(err)
 		return
 	}
 	config.HandlerConfig.Schema = &schema
@@ -70,7 +72,7 @@ func MergeFields(query, mutation *graphql.Object, queryFieldMap, mutationFieldMa
 func MatchSelected(params graphql.ResolveParams, path []string) (bool, error) {
 	fieldASTs := params.Info.FieldASTs
 	if len(fieldASTs) == 0 {
-		return false, fmt.Errorf("MatchSelected: ResolveParams has no fields")
+		return false, errors.New("MatchSelected: ResolveParams has no fields")
 	}
 	return matchSelectedInternal(params, fieldASTs[0].SelectionSet.Selections, path, 0)
 }
@@ -93,7 +95,7 @@ func matchSelectedInternal(params graphql.ResolveParams, selections []ast.Select
 			n := s.(*ast.FragmentSpread).Name.Value
 			fragment, ok := params.Info.Fragments[n]
 			if !ok {
-				return false, fmt.Errorf("GetSelectedFields: no fragment found with name %v", n)
+				return false, errors.New(fmt.Sprintf("GetSelectedFields: no fragment found with name %v", n))
 			}
 			match, err := matchSelectedInternal(params, fragment.GetSelectionSet().Selections, path, pathIndex)
 			if err != nil {
@@ -114,7 +116,7 @@ func matchSelectedInternal(params graphql.ResolveParams, selections []ast.Select
 			}
 			break
 		default:
-			return false, fmt.Errorf("MatchSelected: found unexpected selection type %v", t)
+			return false, errors.New(fmt.Sprintf("MatchSelected: found unexpected selection type %v", t))
 		}
 	}
 	return false, nil
