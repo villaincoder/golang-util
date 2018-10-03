@@ -92,18 +92,24 @@ func NewServer(config *Config, clients []Client, passwordAuthorizationHandler se
 type RequestHandler struct {
 	Server  *Server
 	Request *http.Request
+	userId  string
 }
 
-func (h *RequestHandler) GetUserId() (id string, err error) {
+func (h *RequestHandler) GetUserId() (userId string, err error) {
+	if h.userId != "" {
+		userId = h.userId
+		return
+	}
 	tokenInfo, err := h.Server.Base.ValidationBearerToken(h.Request)
 	if err != nil {
 		return
 	}
-	id = tokenInfo.GetUserID()
+	userId = tokenInfo.GetUserID()
+	h.userId = userId
 	return
 }
 
 func (h *RequestHandler) CheckToken() (err error) {
-	_, err = h.Server.Base.ValidationBearerToken(h.Request)
+	_, err = h.GetUserId()
 	return
 }
