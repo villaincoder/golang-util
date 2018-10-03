@@ -66,3 +66,11 @@ func Err(err error) {
 	}
 	log.Printf("[ERR]:\n%+v\n", err)
 }
+
+func Fatalf(format string, v ...interface{}) {
+	log.Fatalf("[FATAL]:%s\n", fmt.Sprintf(format, v))
+}
+
+func Fatal(err error) {
+	log.Fatalf("[FATAL]:\n%+v\n", err)
+}
