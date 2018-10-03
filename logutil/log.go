@@ -86,62 +86,67 @@ func tag2Type(logTag string) (logType LogType) {
 
 func getLogPrefix(logType LogType) string {
 	logTag := type2Tag(logType)
-	return fmt.Sprintf("[%s]:\n%s\n", logTag, util.GetCallerStack(2))
+	return fmt.Sprintf("[%s]:\n%s\n", logTag, util.GetCallerStack(3))
+}
+
+func Log(logType LogType, err error) {
+	if level > logType {
+		return
+	}
+	log.Printf("%s%+v\n", getLogPrefix(logType), err)
+}
+
+func Logf(logType LogType, format string, v ...interface{}) {
+	if level > logType {
+		return
+	}
+	log.Printf("%s%s\n", getLogPrefix(logType), fmt.Sprintf(format, v...))
 }
 
 func Verbosef(format string, v ...interface{}) {
-	if level > VERBOSE {
-		return
-	}
-	log.Printf("%s%s\n", getLogPrefix(VERBOSE), fmt.Sprintf(format, v...))
+	Logf(VERBOSE, format, v...)
+}
+
+func Verbose(err error) {
+	Log(VERBOSE, err)
 }
 
 func Debugf(format string, v ...interface{}) {
-	if level > DEBUG {
-		return
-	}
-	log.Printf("%s%s\n", getLogPrefix(DEBUG), fmt.Sprintf(format, v...))
+	Logf(DEBUG, format, v...)
+}
+
+func Debug(err error) {
+	Log(DEBUG, err)
 }
 
 func Infof(format string, v ...interface{}) {
-	if level > INFO {
-		return
-	}
-	log.Printf("%s%s\n", getLogPrefix(INFO), fmt.Sprintf(format, v...))
+	Logf(INFO, format, v...)
+}
+
+func Info(err error) {
+	Log(INFO, err)
 }
 
 func Warnf(format string, v ...interface{}) {
-	if level > WARN {
-		return
-	}
-	log.Printf("%s%s\n", getLogPrefix(WARN), fmt.Sprintf(format, v...))
+	Logf(WARN, format, v...)
 }
 
 func Warn(err error) {
-	if level > WARN {
-		return
-	}
-	log.Printf("%s%+v\n", getLogPrefix(WARN), err)
+	Log(WARN, err)
 }
 
 func Errf(format string, v ...interface{}) {
-	if level > ERR {
-		return
-	}
-	log.Printf("%s%s\n", getLogPrefix(ERR), fmt.Sprintf(format, v...))
+	Logf(ERR, format, v...)
 }
 
 func Err(err error) {
-	if level > ERR {
-		return
-	}
-	log.Printf("%s%+v\n", getLogPrefix(ERR), err)
+	Log(ERR, err)
 }
 
 func Fatalf(format string, v ...interface{}) {
-	log.Printf("%s%s\n", getLogPrefix(FATAL), fmt.Sprintf(format, v...))
+	Logf(FATAL, format, v...)
 }
 
 func Fatal(err error) {
-	log.Printf("%s%+v\n", getLogPrefix(FATAL), err)
+	Log(FATAL, err)
 }
