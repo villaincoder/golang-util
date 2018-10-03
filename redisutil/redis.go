@@ -17,6 +17,9 @@ func LoadEnvConfig(config *redis.Options) *redis.Options {
 }
 
 func OpenRedis(config *redis.Options) (client *redis.Client, err error) {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
 	client = redis.NewClient(config)
 	err = errors.WithStack(client.Ping().Err())
 	if err != nil {

@@ -1,8 +1,9 @@
 package grpcutil
 
 import (
-	"github.com/pkg/errors"
 	"net"
+
+	"github.com/pkg/errors"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -32,6 +33,9 @@ func NewServer(registerService RegisterServiceFunc) (server *grpc.Server) {
 }
 
 func Serve(config *Config, server *grpc.Server) (err error) {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
 	listener, err := net.Listen("tcp", ":"+config.Port)
 	if err != nil {
 		err = errors.WithStack(err)

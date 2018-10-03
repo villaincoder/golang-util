@@ -7,50 +7,50 @@ import (
 )
 
 func TestVerbosef(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Verbosef("verbose 1")
-	Level = VERBOSE
+	level = VERBOSE
 	Verbosef("verbose 2")
 }
 
 func TestDebugf(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Debugf("debug 1")
-	Level = DEBUG
+	level = DEBUG
 	Debugf("debug 2")
 }
 
 func TestInfof(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Infof("info 1")
-	Level = INFO
+	level = INFO
 	Infof("info 2")
 }
 
 func TestWarnf(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Warnf("warn 1")
-	Level = WARN
+	level = WARN
 	Warnf("warn 2")
 }
 
 func TestWarn(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Warn(errors.Wrap(errors.New("warn1"), "wrap"))
-	Level = WARN
+	level = WARN
 	Warn(errors.Wrap(errors.New("warn2"), "wrap"))
 }
 
 func TestErrf(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Errf("err 1")
-	Level = ERR
+	level = ERR
 	Errf("err 2")
 }
 
 func TestErr(t *testing.T) {
-	Level = FATAL
+	level = FATAL
 	Err(errors.Wrap(errors.New("err1"), "wrap"))
-	Level = ERR
+	level = ERR
 	Err(errors.Wrap(errors.New("err2"), "wrap"))
 }

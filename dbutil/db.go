@@ -33,6 +33,9 @@ func LoadEnvConfig(config *Config) *Config {
 }
 
 func OpenPostgres(config *Config) (db *gorm.DB, err error) {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
 	db, err = gorm.Open("postgres",
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			config.Host, config.Port, config.User, config.Password, config.Name))

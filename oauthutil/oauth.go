@@ -62,6 +62,9 @@ func (server *Server) HandleTokenRequest(w http.ResponseWriter, r *http.Request)
 }
 
 func NewServer(config *Config, clients []Client, passwordAuthorizationHandler server.PasswordAuthorizationHandler, internalErrorHandler server.InternalErrorHandler) *Server {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
 	manager := manage.NewDefaultManager()
 	manager.MustTokenStorage(redis.NewTokenStore(config.RedisConfig))
 	clientStore := store.NewClientStore()

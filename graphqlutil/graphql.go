@@ -2,6 +2,7 @@ package graphqlutil
 
 import (
 	"fmt"
+
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/language/ast"
 	"github.com/graphql-go/handler"
@@ -42,6 +43,9 @@ func loadEnvHandlerConfig(config *handler.Config) *handler.Config {
 }
 
 func NewHandler(config *Config, registerFields RegisterFieldsFunc) (h *handler.Handler, err error) {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
 	query := graphql.NewObject(graphql.ObjectConfig{Name: "Query", Fields: graphql.Fields{}})
 	mutation := graphql.NewObject(graphql.ObjectConfig{Name: "Mutation", Fields: graphql.Fields{}})
 	registerFields(query, mutation)

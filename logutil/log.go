@@ -18,80 +18,130 @@ const (
 	FATAL
 )
 
-var Level = INFO
+var level = INFO
 
-func getLogTag(logType LogType) string {
-	tagName := "???"
+type Config struct {
+	Level LogType
+}
+
+func LoadEnvConfig(config *Config) *Config {
+	if config == nil {
+		config = &Config{
+			Level: INFO,
+		}
+	}
+	level := util.GetEnvStr("LOG_LEVEL", "")
+	if level != "" {
+		config.Level = tag2Type(level)
+	}
+	return config
+}
+
+func Init(config *Config) {
+	if config == nil {
+		config = LoadEnvConfig(config)
+	}
+	level = config.Level
+}
+
+func type2Tag(logType LogType) (logTag string) {
 	switch logType {
 	case VERBOSE:
-		tagName = "VERBOSE"
+		logTag = "VERBOSE"
 	case DEBUG:
-		tagName = "DEBUG"
+		logTag = "DEBUG"
 	case INFO:
-		tagName = "INFO"
+		logTag = "INFO"
 	case WARN:
-		tagName = "WARN"
+		logTag = "WARN"
 	case ERR:
-		tagName = "ERR"
+		logTag = "ERR"
 	case FATAL:
-		tagName = "FATAL"
+		logTag = "FATAL"
+	default:
+		logTag = "INFO"
 	}
-	return fmt.Sprintf("[%s]:\n%s\n", tagName, util.GetCallerStack(2))
+	return
+}
+
+func tag2Type(logTag string) (logType LogType) {
+	switch logTag {
+	case "VERBOSE":
+		logType = VERBOSE
+	case "DEBUG":
+		logType = DEBUG
+	case "INFO":
+		logType = INFO
+	case "WARN":
+		logType = WARN
+	case "ERR":
+		logType = ERR
+	case "FATAL":
+		logType = FATAL
+	default:
+		logType = INFO
+	}
+	return
+}
+
+func getLogPrefix(logType LogType) string {
+	logTag := type2Tag(logType)
+	return fmt.Sprintf("[%s]:\n%s\n", logTag, util.GetCallerStack(2))
 }
 
 func Verbosef(format string, v ...interface{}) {
-	if Level > VERBOSE {
+	if level > VERBOSE {
 		return
 	}
-	log.Printf("%s%s\n", getLogTag(VERBOSE), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(VERBOSE), fmt.Sprintf(format, v...))
 }
 
 func Debugf(format string, v ...interface{}) {
-	if Level > DEBUG {
+	if level > DEBUG {
 		return
 	}
-	log.Printf("%s%s\n", getLogTag(DEBUG), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(DEBUG), fmt.Sprintf(format, v...))
 }
 
 func Infof(format string, v ...interface{}) {
-	if Level > INFO {
+	if level > INFO {
 		return
 	}
-	log.Printf("%s%s\n", getLogTag(INFO), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(INFO), fmt.Sprintf(format, v...))
 }
 
 func Warnf(format string, v ...interface{}) {
-	if Level > WARN {
+	if level > WARN {
 		return
 	}
-	log.Printf("%s%s\n", getLogTag(WARN), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(WARN), fmt.Sprintf(format, v...))
 }
 
 func Warn(err error) {
-	if Level > WARN {
+	if level > WARN {
 		return
 	}
-	log.Printf("%s%+v\n", getLogTag(WARN), err)
+	log.Printf("%s%+v\n", getLogPrefix(WARN), err)
 }
 
 func Errf(format string, v ...interface{}) {
-	if Level > ERR {
+	if level > ERR {
 		return
 	}
-	log.Printf("%s%s\n", getLogTag(ERR), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(ERR), fmt.Sprintf(format, v...))
 }
 
 func Err(err error) {
-	if Level > ERR {
+	if level > ERR {
 		return
 	}
-	log.Printf("%s%+v\n", getLogTag(ERR), err)
+	log.Printf("%s%+v\n", getLogPrefix(ERR), err)
 }
 
 func Fatalf(format string, v ...interface{}) {
-	log.Printf("%s%s\n", getLogTag(FATAL), fmt.Sprintf(format, v...))
+	log.Printf("%s%s\n", getLogPrefix(FATAL), fmt.Sprintf(format, v...))
 }
 
 func Fatal(err error) {
-	log.Printf("%s%+v\n", getLogTag(FATAL), err)
+	log.Printf("%s%+v\n", getLogPrefix(FATAL), err)
 }
