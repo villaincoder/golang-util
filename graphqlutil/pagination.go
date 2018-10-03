@@ -6,8 +6,8 @@ import (
 )
 
 func ParsePaginationFirst(args map[string]interface{}, def, max uint64) (first uint64) {
-	first = args["first"].(uint64)
-	if first == 0 {
+	first, ok := args["first"].(uint64)
+	if !ok || first == 0 {
 		first = def
 	} else if first > max {
 		first = max
@@ -16,10 +16,14 @@ func ParsePaginationFirst(args map[string]interface{}, def, max uint64) (first u
 }
 
 func ParsePaginationUint64After(args map[string]interface{}) (after uint64, err error) {
-	base64After := args["after"].(string)
+	base64After, ok := args["after"].(string)
+	if !ok {
+		base64After = ""
+	}
 	if base64After != "" {
 		after, err = util.Base64ToUint64(base64After)
 		if err != nil {
+			err = errors.WithStack(err)
 			return
 		}
 	} else {
