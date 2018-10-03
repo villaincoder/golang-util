@@ -26,7 +26,7 @@ func LoadEnvConfig(config *Config) *Config {
 func loadEnvHandlerConfig(config *handler.Config) *handler.Config {
 	if config == nil {
 		config = handler.NewConfig()
-		web := util.GetEnvStr("GQL_WEB", "")
+		web := util.GetEnvStr("GRAPHQL_WEB", "")
 		if web == "Playground" {
 			config.Playground = true
 			config.GraphiQL = false
