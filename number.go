@@ -133,3 +133,31 @@ func ToFloat32(value interface{}) (float32Value float32, err error) {
 	float32Value = float32(float64Value)
 	return
 }
+
+func IntFallback(i, fallback int) int {
+	if i == 0 {
+		return fallback
+	}
+	return i
+}
+
+func UintFallback(i, fallback uint) uint {
+	if i == 0 {
+		return fallback
+	}
+	return i
+}
+
+func Int64Fallback(i, fallback int64) int64 {
+	if i == 0 {
+		return fallback
+	}
+	return i
+}
+
+func Uint64Fallback(i, fallback uint64) uint64 {
+	if i == 0 {
+		return fallback
+	}
+	return i
+}
