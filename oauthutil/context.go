@@ -8,8 +8,8 @@ import (
 
 const CtxKey = "CTX_OAUTH_REQUEST_HANDLER"
 
-func (server *Server) NewContext(request *http.Request) context.Context {
-	return context.WithValue(request.Context(), CtxKey, &RequestHandler{
+func (server *Server) NewContext(ctx context.Context, request *http.Request) context.Context {
+	return context.WithValue(ctx, CtxKey, &RequestHandler{
 		Server:  server,
 		Request: request,
 	})
