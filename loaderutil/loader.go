@@ -1,8 +1,6 @@
 package loaderutil
 
 import (
-	"net/http"
-
 	"github.com/graph-gophers/dataloader"
 )
 
@@ -35,7 +33,6 @@ func FillErrorResults(results *[]*dataloader.Result, len int, err error) {
 
 type RequestHandler struct {
 	Server    *Server
-	Request   *http.Request
 	loaderMap map[string]*dataloader.Loader
 }
 
