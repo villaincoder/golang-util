@@ -33,6 +33,12 @@ func NewErrorResults(keys dataloader.Keys, err error) (results []*dataloader.Res
 	return
 }
 
+func NewErrorThunk(err error) dataloader.Thunk {
+	return func() (interface{}, error) {
+		return nil, err
+	}
+}
+
 type RequestHandler struct {
 	Server    *Server
 	loaderMap map[string]*dataloader.Loader
