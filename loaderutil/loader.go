@@ -24,11 +24,13 @@ func NewEmptyResults(keys dataloader.Keys) (results []*dataloader.Result, result
 	return
 }
 
-func FillErrorResults(results *[]*dataloader.Result, len int, err error) {
-	*results = make([]*dataloader.Result, len)
-	for i := 0; i < len; i++ {
-		(*results)[i] = &dataloader.Result{Error: err}
+func NewErrorResults(keys dataloader.Keys, err error) (results []*dataloader.Result) {
+	count := len(keys)
+	results = make([]*dataloader.Result, count)
+	for i := 0; i < count; i++ {
+		results[i] = &dataloader.Result{Error: err}
 	}
+	return
 }
 
 type RequestHandler struct {
