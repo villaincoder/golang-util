@@ -34,16 +34,14 @@ func LoadEnvConfig(config *Config) *Config {
 }
 
 func loadEnvRedisConfig(config *redis.Config) *redis.Config {
-	var defaultDB int
 	if config == nil {
-		config = &redis.Config{}
-		defaultDB = 10
-	} else {
-		defaultDB = config.DB
+		config = &redis.Config{
+			DB: 10,
+		}
 	}
 	config.Addr = util.GetEnvStr("OAUTH_REDIS_ADDR", util.StrFallback(config.Addr, "127.0.0.1:6379"))
 	config.Password = util.GetEnvStr("OAUTH_REDIS_PASSWORD", util.StrFallback(config.Password, ""))
-	config.DB = util.GetEnvInt("OAUTH_REDIS_DB", defaultDB)
+	config.DB = util.GetEnvInt("OAUTH_REDIS_DB", config.DB)
 	return config
 }
 
