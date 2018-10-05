@@ -37,12 +37,22 @@ func MigrateModels(db *gorm.DB, models ...interface{}) (err error) {
 }
 
 func CreateModels(db *gorm.DB, models ...interface{}) (err error) {
+	db = db.Begin()
+	err = errors.WithStack(db.Error)
+	if err != nil {
+		return
+	}
 	for _, model := range models {
 		err = db.Create(model).Error
 		if err != nil {
+			db.Rollback()
 			err = errors.WithStack(err)
 			return
 		}
+	}
+	err = errors.WithStack(db.Commit().Error)
+	if err != nil {
+		db.Rollback()
 	}
 	return
 }
