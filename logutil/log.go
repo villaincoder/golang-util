@@ -93,7 +93,11 @@ func Log(logType LogType, err error) {
 	if level > logType {
 		return
 	}
-	log.Printf("%s%+v\n", getLogPrefix(logType), err)
+	if logType == FATAL {
+		log.Fatalf("%s%+v\n", getLogPrefix(logType), err)
+	} else {
+		log.Printf("%s%+v\n", getLogPrefix(logType), err)
+	}
 }
 
 func Logf(logType LogType, format string, v ...interface{}) {
