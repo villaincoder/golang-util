@@ -16,8 +16,11 @@ func (server *Server) NewContext(ctx context.Context, request *http.Request) con
 }
 
 func GetRequestHandler(ctx context.Context) (handler *RequestHandler, err error) {
-	handler = ctx.Value(CtxKey).(*RequestHandler)
-	if handler == nil {
+	v := ctx.Value(CtxKey)
+	switch v.(type) {
+	case *RequestHandler:
+		handler = v.(*RequestHandler)
+	default:
 		err = errors.New("context not found oauth request handler")
 	}
 	return
