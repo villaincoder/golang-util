@@ -26,8 +26,12 @@ func NewBaseModel() BaseModel {
 	}
 }
 
+func (m BaseModel) ContainsId() bool {
+	return m.RowId > 0 || m.Id != ""
+}
+
 func (m BaseModel) BeforeSave() (err error) {
-	if m.RowId > 0 || m.Id != "" {
+	if m.ContainsId() {
 		if m.Id == "" {
 			err = errors.New("dbutil.BaseModel.Id empty")
 		} else if util.IsInvalidTime(m.CreatedAt) {
