@@ -1,28 +1,42 @@
 package dbutil
 
 import (
-	"github.com/pkg/errors"
 	"time"
+
+	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"
 	"istudybookgitlab.hdzuoye.com/istudybook/server/golang-util.git"
 )
 
 type BaseModel struct {
-	RowId     uint64     `gorm:"primary_key"`
-	Id        *string    `gorm:"not null;type:uuid;unique_index"`
-	CreatedAt *time.Time `gorm:"not null"`
-	UpdatedAt *time.Time `gorm:"not null"`
+	RowId     uint64    `gorm:"primary_key"`
+	Id        string    `gorm:"not null;type:uuid;unique_index"`
+	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
 	DeletedAt *time.Time
 }
 
 func NewBaseModel() BaseModel {
-	nowTime := util.Time2Ptr(time.Now())
+	nowTime := time.Now()
 	return BaseModel{
-		Id:        util.Str2Ptr(util.NewUUIDStr()),
+		Id:        util.NewUUIDStr(),
 		CreatedAt: nowTime,
 		UpdatedAt: nowTime,
 	}
+}
+
+func (m BaseModel) BeforeSave() (err error) {
+	if m.RowId > 0 || m.Id != "" {
+		if m.Id == "" {
+			err = errors.New("dbutil.BaseModel.Id empty")
+		} else if util.IsInvalidTime(m.CreatedAt) {
+			err = errors.New("dbutil.BaseModel.CreatedAt invalid")
+		} else if util.IsInvalidTime(m.UpdatedAt) {
+			err = errors.New("dbutil.BaseModel.UpdatedAt invalid")
+		}
+	}
+	return
 }
 
 func MigrateModels(db *gorm.DB, models ...interface{}) (err error) {
