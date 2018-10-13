@@ -52,16 +52,16 @@ func TestSet(t *testing.T) {
 func TestSet_Foreach(t *testing.T) {
 	set := NewSet("1", "2", "3")
 	s1 := ""
-	set.Foreach(func(i interface{}) bool {
-		s1 += i.(string)
+	set.Foreach(func(i int, v interface{}) bool {
+		s1 += v.(string)
 		return false
 	})
 	if len(s1) != 3 {
 		t.Fatal("foreach no break error")
 	}
 	s2 := ""
-	set.Foreach(func(i interface{}) bool {
-		s2 += i.(string)
+	set.Foreach(func(i int, v interface{}) bool {
+		s2 += v.(string)
 		return true
 	})
 	if len(s2) != 1 {

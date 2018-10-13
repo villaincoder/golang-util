@@ -2,7 +2,7 @@ package util
 
 var empty = struct{}{}
 
-type SetForeachFunc func(interface{}) bool
+type SetForeachFunc func(index int, value interface{}) bool
 
 type Set struct {
 	m map[interface{}]struct{}
@@ -39,9 +39,11 @@ func (s *Set) Clear() {
 }
 
 func (s *Set) Foreach(f SetForeachFunc) {
+	index := 0
 	for k, _ := range s.m {
-		if f(k) {
+		if f(index, k) {
 			break
 		}
+		index++
 	}
 }
